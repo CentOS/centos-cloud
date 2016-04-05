@@ -1,0 +1,73 @@
+# OpenStack modules
+mod 'cinder',
+  :git => 'https://git.openstack.org/openstack/puppet-cinder',
+  :ref => 'stable/mitaka'
+
+mod 'glance',
+  :git => 'https://git.openstack.org/openstack/puppet-glance',
+  :ref => 'stable/mitaka'
+
+mod 'horizon',
+  :git => 'https://git.openstack.org/openstack/puppet-horizon',
+  :ref => 'stable/mitaka'
+
+mod 'keystone',
+  :git => 'https://git.openstack.org/openstack/puppet-keystone',
+  :ref => 'stable/mitaka'
+
+mod 'neutron',
+  :git => 'https://git.openstack.org/openstack/puppet-neutron',
+  :ref => 'stable/mitaka'
+
+mod 'nova',
+  :git => 'https://git.openstack.org/openstack/puppet-nova',
+  :ref => 'stable/mitaka'
+
+mod 'openstacklib',
+  :git => 'https://git.openstack.org/openstack/puppet-openstacklib',
+  :ref => 'stable/mitaka'
+
+mod 'openstack_extras',
+  :git => 'https://git.openstack.org/openstack/puppet-openstack_extras',
+  :ref => 'stable/mitaka'
+
+# External modules
+mod 'apache',
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache',
+  :branch => '1.8.x'
+
+mod 'concat',
+  :git => 'https://github.com/puppetlabs/puppetlabs-concat',
+  :branch => '1.2.x'
+
+mod 'inifile',
+  :git => 'https://github.com/puppetlabs/puppetlabs-inifile',
+  :branch => '1.4.x'
+
+mod 'memcached',
+  :git => 'https://github.com/saz/puppet-memcached',
+  :tag => 'v2.8.1'
+
+mod 'mysql',
+  :git => 'https://github.com/puppetlabs/puppetlabs-mysql',
+  :branch => '3.6.x'
+
+mod "ntp",
+  :git => "https://github.com/puppetlabs/puppetlabs-ntp.git",
+  :ref => "4.1.x"
+
+mod 'rabbitmq',
+  :git => 'https://github.com/puppetlabs/puppetlabs-rabbitmq',
+  :tag => '5.3.1'
+
+mod 'staging',
+  :git => 'https://github.com/nanliu/puppet-staging',
+  :tag => '1.0.4'
+
+mod 'stdlib',
+  :git => 'https://github.com/puppetlabs/puppetlabs-stdlib',
+  :branch => '4.9.x'
+
+mod 'sysctl',
+  :git => 'https://github.com/duritong/puppet-sysctl',
+  :tag => 'v0.0.11'
