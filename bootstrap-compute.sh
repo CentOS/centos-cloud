@@ -18,3 +18,10 @@ mv /root/centos-cloud/puppet/modules/centos_cloud modules/
 echo "${1} controller.openstack.ci.centos.org" >> /etc/hosts
 puppet apply -e "include ::centos_cloud::compute" || exit 1
 popd
+
+# make sure we got added in
+source /root/openrc
+openstack hypervisor list | grep -i $(hostname )
+if [ $? -eq 0 ]; then 
+  echo 'Success!'
+fi
