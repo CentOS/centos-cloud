@@ -91,6 +91,6 @@ class centos_cloud::controller::neutron (
     gateway_ip       => '172.22.7.254',
     network_name     => 'publicnet',
     dns_nameservers  => ['172.22.7.245'],
-    allocation_pools => ["start=172.22.6.50,end=172.22.7.250"],
+    allocation_pools => ["start=172.22.6.50,end=172.22.7.240"],
   }
 }
