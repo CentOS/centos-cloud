@@ -1,5 +1,6 @@
 class centos_cloud::server::packages {
   package { [
+    'bash-completion',
     'deltarpm',
     'libguestfs-tools',
     'libselinux-python',
