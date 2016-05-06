@@ -57,4 +57,8 @@ class centos_cloud::controller::keystone (
   }
 
   include ::keystone::disable_admin_token_auth
+
+  keystone_role { '_member_':
+    ensure => present
+  }
 }
