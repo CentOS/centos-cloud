@@ -1,5 +1,5 @@
 class centos_cloud::controller::neutron (
-  $allowed_hosts = "172.19.0.0/22",
+  $allowed_hosts = "172.22.6.0/23",
   $controller    = 'controller.openstack.ci.centos.org',
   $bind_host     = '0.0.0.0',
   $rabbit_port   = '5672',
@@ -87,10 +87,10 @@ class centos_cloud::controller::neutron (
 
   # Provider subnet
   neutron_subnet { 'publicsubnet':
-    cidr             => '172.19.0.0/22',
-    gateway_ip       => '172.19.3.254',
+    cidr             => '172.22.6.0/23',
+    gateway_ip       => '172.22.7.254',
     network_name     => 'publicnet',
-    dns_nameservers  => ['172.19.0.12'],
-    allocation_pools => ["start=172.19.1.32,end=172.19.1.38"],
+    dns_nameservers  => ['172.22.7.245'],
+    allocation_pools => ["start=172.22.6.50,end=172.22.7.240"],
   }
 }

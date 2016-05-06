@@ -1,5 +1,5 @@
 class centos_cloud::controller::keystone (
-  $allowed_hosts          = "172.19.0.0/22",
+  $allowed_hosts          = "172.22.6.0/23",
   $bind_host              = '0.0.0.0',
   $controller             = 'controller.openstack.ci.centos.org',
   $cache_enabled          = true,

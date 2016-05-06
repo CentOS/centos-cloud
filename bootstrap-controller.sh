@@ -1,7 +1,11 @@
 #!/bin/bash
 # Helper script to repetitively test things quickly
-# ci.centos.org nodes come with a pre-installed firewall
-yum -y remove firewalld
+
+bash baseline.sh
+if [ $? -ne 0 ]; then
+  echo 'Something broke in the baseline'
+  exit 1
+fi
 
 yum -y install yum-plugin-priorities rubygems centos-release-openstack-mitaka
 yum -y install puppet

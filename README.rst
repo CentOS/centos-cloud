@@ -47,3 +47,4 @@ Todo
 - SSL everywhere (let's encrypt?)
 - Probably configure keystone token driver and cache to something else than memcached (fernet?)
 - It's kind of slow, haven't looked into that yet. Maybe it's related to keystone authentication.
+- Make sure you change the admin password once all the nodes are setup
