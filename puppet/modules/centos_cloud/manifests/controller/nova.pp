@@ -85,11 +85,6 @@ class centos_cloud::controller::nova (
     neutron_password   => $neutron_password,
   }
 
-  # https://bugs.launchpad.net/puppet-nova/+bug/1567157
-  nova_config { 'DEFAULT/use_neutron':
-    value => true;
-  }
-
   include ::nova::client
   include ::nova::conductor
   include ::nova::cron::archive_deleted_rows

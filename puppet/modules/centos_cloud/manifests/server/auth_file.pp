@@ -1,6 +1,6 @@
 class centos_cloud::server::auth_file (
   $controller = "controller.openstack.ci.centos.org",
-  $password = "keystone"
+  $password = "keystone",
   $path = '/root/openrc'
 ){
   class { '::openstack_extras::auth_file':
@@ -13,6 +13,6 @@ class centos_cloud::server::auth_file (
 
   exec { 'Setup openstackclient bash completion':
     command => "/usr/bin/openstack complete >> ${path}",
-    unless  => "grep -q '_openstack()' ${path}"
+    unless  => "/usr/bin/grep -q '_openstack()' ${path}"
   }
 }

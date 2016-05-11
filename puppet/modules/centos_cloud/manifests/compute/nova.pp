@@ -45,11 +45,6 @@ class centos_cloud::compute::nova (
     neutron_password   => $neutron_password,
   }
 
-  # https://bugs.launchpad.net/puppet-nova/+bug/1567157
-  nova_config { 'DEFAULT/use_neutron':
-    value => true;
-  }
-
   include ::nova::vncproxy
   include ::nova::consoleauth
 }
