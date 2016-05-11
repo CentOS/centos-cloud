@@ -18,5 +18,5 @@ gem install r10k
 
 pushd /etc/puppet
 PUPPETFILE=/root/centos-cloud/puppet/Puppetfile r10k puppetfile install -v
-mv /root/centos-cloud/puppet/modules/centos_cloud modules/
+cp -a /root/centos-cloud/puppet/modules/centos_cloud modules/
 popd
