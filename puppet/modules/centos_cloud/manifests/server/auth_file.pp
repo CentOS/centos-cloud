@@ -1,6 +1,6 @@
 class centos_cloud::server::auth_file (
   $controller = "controller.openstack.ci.centos.org",
-  $password = "keystone"
+  $password = "keystone",
   $path = '/root/openrc'
 ){
   class { '::openstack_extras::auth_file':
