@@ -1,11 +1,12 @@
 class centos_cloud::controller::neutron (
-  $allowed_hosts = "172.22.6.0/23",
-  $controller    = 'controller.openstack.ci.centos.org',
-  $bind_host     = '0.0.0.0',
-  $rabbit_port   = '5672',
-  $user          = 'neutron',
-  $password      = 'neutron',
-  $nova_password = 'nova'
+  $allowed_hosts     = "172.22.6.0/23",
+  $controller        = 'controller.openstack.ci.centos.org',
+  $memcache_servers  = ['127.0.0.1:11211'],
+  $bind_host         = '0.0.0.0',
+  $rabbit_port       = '5672',
+  $user              = 'neutron',
+  $password          = 'neutron',
+  $nova_password     = 'nova'
 ) {
 
   rabbitmq_user { $user:
@@ -41,6 +42,7 @@ class centos_cloud::controller::neutron (
     bind_host               => $bind_host,
     core_plugin             => 'ml2',
     dhcp_agent_notification => true,
+    memcache_servers        => $memcache_servers,
     rabbit_user             => $user,
     rabbit_password         => $password,
     rabbit_host             => $controller,

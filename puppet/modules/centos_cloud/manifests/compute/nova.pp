@@ -1,16 +1,18 @@
 class centos_cloud::compute::nova (
-  $controller       = 'controller.openstack.ci.centos.org',
-  $rabbit_port      = '5672',
-  $user             = 'nova',
-  $user_api         = 'nova_api',
-  $password         = 'nova',
-  $password_api     = 'nova_api',
-  $neutron_password = 'neutron'
+  $controller        = 'controller.openstack.ci.centos.org',
+  $memcached_servers = ['127.0.0.1:11211'],
+  $rabbit_port       = '5672',
+  $user              = 'nova',
+  $user_api          = 'nova_api',
+  $password          = 'nova',
+  $password_api      = 'nova_api',
+  $neutron_password  = 'neutron'
 ) {
 
   class { '::nova':
     api_database_connection => "mysql+pymysql://${user_api}:${password_api}@${controller}/nova_api?charset=utf8",
     database_connection     => "mysql+pymysql://${user}:${password}@${controller}/nova?charset=utf8",
+    memcached_servers       => $memcached_servers,
     glance_api_servers      => "http://${controller}:9292",
     notification_driver     => 'messagingv2',
     notify_on_state_change  => 'vm_and_task_state',

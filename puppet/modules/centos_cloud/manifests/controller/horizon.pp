@@ -7,7 +7,6 @@ class centos_cloud::controller::horizon (
   $servername         = 'dashboard.openstack.ci.centos.org',
   $vhost_extra_params = { add_listen => false }
 ){
-
   class { '::horizon':
     allowed_hosts      => $allowed_hosts,
     bind_address       => $bind_host,
