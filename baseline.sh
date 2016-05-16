@@ -1,10 +1,15 @@
 #!/bin/bash
 # This script will do the basic common stuff needed everywhere
 
-yum -y remove firewalld
-service NetworkManager stop
-yum -y remove Network\*
-service network restart
+if rpm -q NetworkManager; then
+    service NetworkManager stop
+    yum -y remove Network\*
+    service network restart
+fi
+
+if rpm -q firewalld; then
+    yum -y remove firewalld
+fi
 
 ping -c 3 8.8.8.8 > /dev/null 2>&1
 if [ $? -ne 0 ]; then
