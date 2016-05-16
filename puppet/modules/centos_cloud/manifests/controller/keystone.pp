@@ -6,9 +6,9 @@ class centos_cloud::controller::keystone (
   $cache_backend          = 'oslo_cache.memcache_pool',
   $cache_memcache_servers = ['127.0.0.1:11211'],
   $password               = 'keystone',
-  $token_driver           = 'memcache',
-  $token_caching          = true,
-  $user                   = 'keystone'
+  $user                   = 'keystone',
+  $token_provider         = 'fernet',
+  $enable_fernet_setup    = true,
 ) {
 
   include centos_cloud::controller::memcached
@@ -32,8 +32,27 @@ class centos_cloud::controller::keystone (
     enabled                => true,
     public_bind_host       => $bind_host,
     service_name           => 'httpd',
-    token_driver           => $token_driver,
-    token_caching          => $token_caching
+    token_provider         => $token_provider,
+    enable_fernet_setup    => $enable_fernet_setup
+  }
+
+  # Remove me when this is merged, built and released:
+  # https://review.rdoproject.org/r/#/c/1144/
+  file { '/var/log/keystone':
+    ensure  => directory,
+    owner   => 'keystone',
+    group   => 'keystone',
+    mode    => '0750',
+    before  => Exec['keystone-manage db_sync'],
+    require => Package['keystone']
+  }->
+  file { '/var/log/keystone/keystone.log':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'keystone',
+    mode    => '0660',
+    before  => Exec['keystone-manage db_sync'],
+    require => Package['keystone']
   }
 
   include ::apache
