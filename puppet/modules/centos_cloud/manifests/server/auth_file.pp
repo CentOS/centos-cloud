@@ -12,7 +12,7 @@ class centos_cloud::server::auth_file (
   } ->
 
   exec { 'Setup openstackclient bash completion':
-    command => "/usr/bin/openstack complete >> ${path}",
+    command => "/usr/bin/bash -c 'source ${path}; /usr/bin/openstack complete >> ${path}'",
     unless  => "/usr/bin/grep -q '_openstack()' ${path}"
   }
 }

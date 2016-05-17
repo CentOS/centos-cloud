@@ -2,16 +2,11 @@ class centos_cloud::controller::keystone (
   $allowed_hosts          = "172.22.6.0/23",
   $bind_host              = '0.0.0.0',
   $controller             = 'controller.openstack.ci.centos.org',
-  $cache_enabled          = true,
-  $cache_backend          = 'oslo_cache.memcache_pool',
-  $cache_memcache_servers = ['127.0.0.1:11211'],
   $password               = 'keystone',
-  $token_driver           = 'memcache',
-  $token_caching          = true,
-  $user                   = 'keystone'
+  $user                   = 'keystone',
+  $token_provider         = 'fernet',
+  $enable_fernet_setup    = true,
 ) {
-
-  include centos_cloud::controller::memcached
 
   include ::keystone::client
   include ::keystone::cron::token_flush
@@ -25,15 +20,31 @@ class centos_cloud::controller::keystone (
   class { '::keystone':
     admin_bind_host        => $bind_host,
     admin_token            => $password,
-    cache_enabled          => $cache_enabled,
-    cache_backend          => $cache_backend,
-    cache_memcache_servers => $cache_memcache_servers,
     database_connection    => "mysql+pymysql://${user}:${password}@${controller}/keystone",
     enabled                => true,
     public_bind_host       => $bind_host,
     service_name           => 'httpd',
-    token_driver           => $token_driver,
-    token_caching          => $token_caching
+    token_provider         => $token_provider,
+    enable_fernet_setup    => $enable_fernet_setup
+  }
+
+  # Remove me when this is merged, built and released:
+  # https://review.rdoproject.org/r/#/c/1144/
+  file { '/var/log/keystone':
+    ensure  => directory,
+    owner   => 'keystone',
+    group   => 'keystone',
+    mode    => '0750',
+    before  => Exec['keystone-manage db_sync'],
+    require => Package['keystone']
+  }->
+  file { '/var/log/keystone/keystone.log':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'keystone',
+    mode    => '0660',
+    before  => Exec['keystone-manage db_sync'],
+    require => Package['keystone']
   }
 
   include ::apache

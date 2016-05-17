@@ -1,12 +1,13 @@
 class centos_cloud::controller::glance (
-  $allowed_hosts = "172.22.6.0/23",
-  $backend       = 'file',
-  $bind_host     = '0.0.0.0',
-  $controller    = 'controller.openstack.ci.centos.org',
-  $password      = 'glance',
-  $rabbit_port   = '5672',
-  $stores        = ['http', 'file'],
-  $user          = 'glance'
+  $allowed_hosts     = "172.22.6.0/23",
+  $backend           = 'file',
+  $bind_host         = '0.0.0.0',
+  $controller        = 'controller.openstack.ci.centos.org',
+  $memcached_servers = ['127.0.0.1:11211'],
+  $password          = 'glance',
+  $rabbit_port       = '5672',
+  $stores            = ['http', 'file'],
+  $user              = 'glance'
 ) {
 
   rabbitmq_user { $user:
@@ -45,6 +46,7 @@ class centos_cloud::controller::glance (
     auth_uri            => "http://${controller}:5000",
     bind_host           => $bind_host,
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/glance?charset=utf8",
+    memcached_servers   => $memcached_servers,
     default_store       => $backend,
     identity_uri        => "http://${controller}:35357",
     keystone_password   => $password,
@@ -57,6 +59,7 @@ class centos_cloud::controller::glance (
     auth_uri            => "http://${controller}:5000",
     bind_host           => $bind_host,
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/glance?charset=utf8",
+    memcached_servers   => $memcached_servers,
     identity_uri        => "http://${controller}:35357",
     keystone_password   => $password,
     workers             => $::processorcount

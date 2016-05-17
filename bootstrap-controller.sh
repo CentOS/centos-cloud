@@ -1,7 +1,7 @@
 #!/bin/bash
 # Helper script to repetitively test things quickly
 
-bash baseline.sh
+. baseline.sh
 if [ $? -ne 0 ]; then
   echo 'Something broke in the baseline'
   exit 1
