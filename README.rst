@@ -30,7 +30,7 @@ Architecture tl;dr
 ------------------
 - Nova, Neutron, Keystone, Glance, Horizon only (no Swift, Cinder, Heat, Telemetry, etc.)
 - No security groups, no floating IPs, no virtual routers, no metadata service
-- Flat networking (no VLAN/VXLAN) with DHCP and LinuxBridge (cloud-init lacks a feature to remove the need for DHCP)
+- Flat networking (no VLAN/VXLAN) with DHCP and LinuxBridge
 
 Notes
 -----
