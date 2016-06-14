@@ -1,0 +1,5 @@
+[controller]
+n1.humpty.ci.centos.org
+
+[compute]
+n[2:6].humpty.ci.centos.org

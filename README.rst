@@ -42,6 +42,26 @@ Notes
     openstack console url show <vmuuid>
     # Access the URL via a tunnel or some other mean of reaching the private network
 
+Ops
+---
+Ansible playbooks will be created as needed to help operating the cloud.
+
+Ansible must be run from the controller node which has network and ssh key
+authentication set up to the compute nodes.
+
+manage-services.yml
+~~~~~~~~~~~~~~~~~~~
+::
+
+    # Stop all OpenStack services only on compute nodes
+    ansible-playbook -i hosts -l compute playbooks/manage-services.yml -e "action=stop"
+
+    # Restart all OpenStack services on every host
+    ansible-playbook -i hosts playbooks/manage-services.yml -e "action=restart"
+
+    # Start all OpenStack services only on controller
+    ansible-playbook -i hosts -l controller playbooks/manage-services.yml -e "action=start"
+
 Todo
 ----
 - SSL everywhere (let's encrypt?)

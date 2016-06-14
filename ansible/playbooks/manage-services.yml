@@ -1,0 +1,25 @@
+---
+- name: Manage services
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Stop services
+      service:
+        name: "{{ item }}"
+        state: "stopped"
+      with_items: "{{ openstack_services }}"
+      when: action is defined and action == "stop"
+
+    - name: Start services
+      service:
+        name: "{{ item }}"
+        state: "started"
+      with_items: "{{ openstack_services }}"
+      when: action is defined and action == "start"
+
+    - name: Restart services
+      service:
+        name: "{{ item }}"
+        state: "restarted"
+      with_items: "{{ openstack_services }}"
+      when: action is defined and action == "restart"

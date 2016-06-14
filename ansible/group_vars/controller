@@ -1,0 +1,8 @@
+openstack_services:
+  - neutron-server
+  - neutron-linuxbridge-agent
+  - openstack-glance-api
+  - openstack-glance-registry
+  - openstack-nova-conductor
+  - openstack-nova-scheduler
+  - httpd

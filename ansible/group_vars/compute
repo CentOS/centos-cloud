@@ -1,0 +1,5 @@
+openstack_services:
+  - openstack-nova-compute
+  - openstack-nova-novncproxy
+  - neutron-dhcp-agent
+  - neutron-linuxbridge-agent
