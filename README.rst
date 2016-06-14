@@ -34,7 +34,6 @@ Architecture tl;dr
 
 Notes
 -----
-- The root password of the instance is hardcoded in the image as "root" for test purposes.
 - There is an openrc with credentials generated in /root/ of controller and compute nodes
 - To access a novnc console::
 
