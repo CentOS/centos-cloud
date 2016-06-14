@@ -9,7 +9,6 @@ class centos_cloud::controller::keystone (
 ) {
 
   include ::keystone::client
-  include ::keystone::cron::token_flush
 
   class { '::keystone::db::mysql':
     allowed_hosts => [$controller, $allowed_hosts],
