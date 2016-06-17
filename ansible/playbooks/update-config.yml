@@ -1,0 +1,22 @@
+---
+- name: Update puppet modules
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - shell: |
+        pushd /etc/puppet
+        PUPPETFILE=/root/centos-cloud/puppet/Puppetfile r10k puppetfile install -v
+        cp -a /root/centos-cloud/puppet/modules/centos_cloud modules/
+        popd
+
+- name: Update controller
+  hosts: controller
+  gather_facts: no
+  tasks:
+    - shell: puppet apply -e "include ::centos_cloud::controller"
+
+- name: Update compute nodes
+  hosts: compute
+  gather_facts: no
+  tasks:
+    - shell: puppet apply -e "include ::centos_cloud::compute"

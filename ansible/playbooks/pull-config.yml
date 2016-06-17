@@ -1,0 +1,10 @@
+---
+- name: Ensure centos-cloud repository is up to date
+  hosts: all
+  gather_facts: no
+  tasks:
+    - git:
+        repo: "https://github.com/dmsimard/centos-cloud"
+        dest: "/root/centos-cloud"
+        update: "yes"
+        force: "yes"
