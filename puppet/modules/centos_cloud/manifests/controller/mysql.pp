@@ -1,7 +1,7 @@
 class centos_cloud::controller::mysql {
 
   file { '/etc/systemd/system/mariadb.service.d/':
-    ensure => directory
+    ensure => directory
   }->
   file { '/etc/systemd/system/mariadb.service.d/limits.conf':
     ensure => present,
@@ -9,7 +9,7 @@ class centos_cloud::controller::mysql {
     notify => [ Exec['Reload systemctl'], Service['mysqld'] ]
   }
 
-  exec { 'Reload sytemctl':
+  exec { 'Reload systemctl':
     command     => "/usr/bin/systemctl daemon-reload",
     refreshonly => true
   }
