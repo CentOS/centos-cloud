@@ -64,14 +64,15 @@ class centos_cloud::controller::nova (
   }
 
   class { '::nova::api':
-    admin_password   => $password,
-    api_bind_address => $bind_host,
-    auth_uri         => "http://${controller}:5000",
-    enabled_apis     => ['osapi_compute'],
-    identity_uri     => "http://${controller}:35357",
-    osapi_v3         => true,
-    service_name     => 'httpd',
-    sync_db_api      => true
+    admin_password        => $password,
+    api_bind_address      => $bind_host,
+    auth_uri              => "http://${controller}:5000",
+    enabled_apis          => ['osapi_compute'],
+    identity_uri          => "http://${controller}:35357",
+    osapi_v3              => true,
+    service_name          => 'httpd',
+    sync_db_api           => true,
+    osapi_compute_workers => $workers
   }
 
   include ::apache
@@ -91,7 +92,9 @@ class centos_cloud::controller::nova (
   }
 
   include ::nova::client
-  include ::nova::conductor
+  class { '::nova::conductor':
+    workers => $workers,
+  }
   include ::nova::cron::archive_deleted_rows
   include ::nova::scheduler
   include ::nova::scheduler::filter
