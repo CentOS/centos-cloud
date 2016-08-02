@@ -6,6 +6,10 @@ class centos_cloud::controller::keystone (
   $user                   = 'keystone',
   $token_provider         = 'fernet',
   $enable_fernet_setup    = true,
+  $admin_workers          = '16',
+  $public_workers         = '16',
+  $workers                = '16',
+  $threads                = '1'
 ) {
 
   include ::keystone::client
@@ -24,7 +28,9 @@ class centos_cloud::controller::keystone (
     public_bind_host       => $bind_host,
     service_name           => 'httpd',
     token_provider         => $token_provider,
-    enable_fernet_setup    => $enable_fernet_setup
+    enable_fernet_setup    => $enable_fernet_setup,
+    admin_workers          => $admin_workers,
+    public_workers         => $public_workers
   }
 
   # Remove me when this is merged, built and released:
@@ -52,7 +58,8 @@ class centos_cloud::controller::keystone (
     bind_host       => $bind_host,
     servername      => $controller,
     ssl             => false,
-    workers         => $::processorcount
+    workers         => $workers,
+    threads         => $threads
   }
 
   class { '::keystone::roles::admin':

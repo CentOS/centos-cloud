@@ -8,7 +8,9 @@ class centos_cloud::controller::nova (
   $rabbit_port       = '5672',
   $user              = 'nova',
   $user_api          = 'nova_api',
-  $neutron_password  = 'neutron'
+  $neutron_password  = 'neutron',
+  $workers           = '16',
+  $threads           = '1'
 ) {
 
   rabbitmq_user { $user:
@@ -77,7 +79,8 @@ class centos_cloud::controller::nova (
     bind_host  => $bind_host,
     servername => $controller,
     ssl        => false,
-    workers    => $::processorcount
+    workers    => $workers,
+    threads    => $threads
   }
 
   class { '::nova::network::neutron':
