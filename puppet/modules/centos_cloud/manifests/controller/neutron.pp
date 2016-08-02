@@ -6,7 +6,9 @@ class centos_cloud::controller::neutron (
   $rabbit_port       = '5672',
   $user              = 'neutron',
   $password          = 'neutron',
-  $nova_password     = 'nova'
+  $nova_password     = 'nova',
+  $api_workers       = '8',
+  $rpc_workers       = '8'
 ) {
 
   rabbitmq_user { $user:
@@ -52,12 +54,12 @@ class centos_cloud::controller::neutron (
   include ::neutron::client
 
   class { '::neutron::server':
-    api_workers         => $::processorcount,
+    api_workers         => $api_workers,
     auth_uri            => "http://${controller}:5000",
     auth_url            => "http://${controller}:35357",
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/neutron?charset=utf8",
     password            => $password,
-    rpc_workers         => $::processorcount,
+    rpc_workers         => $rpc_workers,
     sync_db             => true
   }
 

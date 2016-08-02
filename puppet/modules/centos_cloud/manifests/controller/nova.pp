@@ -9,7 +9,7 @@ class centos_cloud::controller::nova (
   $user              = 'nova',
   $user_api          = 'nova_api',
   $neutron_password  = 'neutron',
-  $workers           = '16',
+  $workers           = '8',
   $threads           = '1'
 ) {
 

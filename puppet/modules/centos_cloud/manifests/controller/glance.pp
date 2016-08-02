@@ -7,7 +7,8 @@ class centos_cloud::controller::glance (
   $password          = 'glance',
   $rabbit_port       = '5672',
   $stores            = ['http', 'file'],
-  $user              = 'glance'
+  $user              = 'glance',
+  $workers           = '8',
 ) {
 
   rabbitmq_user { $user:
@@ -52,7 +53,7 @@ class centos_cloud::controller::glance (
     keystone_password   => $password,
     registry_host       => $controller,
     stores              => $stores,
-    workers             => $::processorcount
+    workers             => $workers
   }
 
   class { '::glance::registry':
@@ -62,7 +63,7 @@ class centos_cloud::controller::glance (
     memcached_servers   => $memcached_servers,
     identity_uri        => "http://${controller}:35357",
     keystone_password   => $password,
-    workers             => $::processorcount
+    workers             => $workers
   }
 
   class { '::glance::notify::rabbitmq':
