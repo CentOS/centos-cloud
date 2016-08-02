@@ -61,6 +61,17 @@ manage-services.yml
     # Start all OpenStack services only on controller
     ansible-playbook -i hosts -l controller playbooks/manage-services.yml -e "action=start"
 
+
+Create image
+------------
+You can create a base image using the create-image.sh script
+::
+
+    # For instance on Fedora 24
+    dnf install -y libguestfs-tools
+    ./create-image.sh
+
+
 Todo
 ----
 - SSL everywhere (let's encrypt?)
