@@ -1,12 +1,15 @@
 class centos_cloud::compute::nova (
-  $controller        = 'controller.openstack.ci.centos.org',
-  $memcached_servers = ['127.0.0.1:11211'],
-  $rabbit_port       = '5672',
-  $user              = 'nova',
-  $user_api          = 'nova_api',
-  $password          = 'nova',
-  $password_api      = 'nova_api',
-  $neutron_password  = 'neutron'
+  $controller            = 'controller.openstack.ci.centos.org',
+  $memcached_servers     = ['127.0.0.1:11211'],
+  $rabbit_port           = '5672',
+  $user                  = 'nova',
+  $user_api              = 'nova_api',
+  $password              = 'nova',
+  $password_api          = 'nova_api',
+  $neutron_password      = 'neutron',
+  $cpu_allocation_ratio  = '16.0',
+  $ram_allocation_ratio  = '1.5',
+  $disk_allocation_ratio = '1.5'
 ) {
 
   class { '::nova':
@@ -20,7 +23,10 @@ class centos_cloud::compute::nova (
     rabbit_password         => $password,
     rabbit_port             => $rabbit_port,
     rabbit_userid           => $user,
-    rabbit_use_ssl          => false
+    rabbit_use_ssl          => false,
+    cpu_allocation_ratio    => $cpu_allocation_ratio,
+    ram_allocation_ratio    => $ram_allocation_ratio,
+    disk_allocation_ratio   => $disk_allocation_ratio
   }
 
   class { '::nova::compute':
