@@ -71,7 +71,8 @@ class centos_cloud::controller::nova (
     osapi_v3              => true,
     service_name          => 'httpd',
     sync_db_api           => true,
-    osapi_compute_workers => $workers
+    osapi_compute_workers => $workers,
+    install_cinder_client => false
   }
 
   include ::apache
