@@ -1,6 +1,5 @@
 #!/bin/bash
 # This script will do the basic common stuff needed everywhere
-
 if rpm -q NetworkManager; then
     service NetworkManager stop
     yum -y remove Network\*
@@ -21,7 +20,6 @@ yum -y install yum-plugin-priorities rubygems centos-release-openstack-newton
 yum -y install puppet python-openstackclient
 gem install r10k
 
-pushd /etc/puppet
-PUPPETFILE=/root/centos-cloud/puppet/Puppetfile r10k puppetfile install -v
-cp -a /root/centos-cloud/puppet/modules/centos_cloud modules/
-popd
+cwd=$(cd `dirname $0` && pwd -P)
+r10k puppetfile install --puppetfile ${cwd}/puppet/Puppetfile --moduledir /etc/puppet/modules -v
+cp -a ${cwd}/puppet/modules/centos_cloud /etc/puppet/modules/
