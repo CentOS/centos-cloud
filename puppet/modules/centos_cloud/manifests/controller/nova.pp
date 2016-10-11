@@ -98,5 +98,4 @@ class centos_cloud::controller::nova (
   include ::nova::cron::archive_deleted_rows
   include ::nova::scheduler
   include ::nova::scheduler::filter
-
 }

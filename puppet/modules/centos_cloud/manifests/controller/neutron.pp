@@ -81,20 +81,4 @@ class centos_cloud::controller::neutron (
     local_ip                    => $::ipaddress,
     physical_interface_mappings => ['physnet0:eth0'],
   }
-
-  # Provider network
-  neutron_network { 'publicnet':
-    shared                    => true,
-    provider_network_type     => 'flat',
-    provider_physical_network => 'physnet0',
-  }
-
-  # Provider subnet
-  neutron_subnet { 'publicsubnet':
-    cidr             => '172.19.4.0/22',
-    gateway_ip       => '172.19.7.254',
-    network_name     => 'publicnet',
-    dns_nameservers  => ['172.19.7.253'],
-    allocation_pools => ["start=172.19.4.10,end=172.19.7.250"],
-  }
 }
