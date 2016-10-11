@@ -7,10 +7,6 @@ mod 'glance',
   :git => 'https://git.openstack.org/openstack/puppet-glance',
   :ref => 'stable/newton'
 
-mod 'horizon',
-  :git => 'https://git.openstack.org/openstack/puppet-horizon',
-  :ref => 'stable/newton'
-
 mod 'keystone',
   :git => 'https://git.openstack.org/openstack/puppet-keystone',
   :ref => 'stable/newton'
