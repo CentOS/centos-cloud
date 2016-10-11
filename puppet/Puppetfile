@@ -27,6 +27,10 @@ mod 'openstack_extras',
   :git => 'https://git.openstack.org/openstack/puppet-openstack_extras',
   :ref => 'stable/newton'
 
+mod 'oslo',
+  :git => 'https://git.openstack.org/openstack/puppet-oslo',
+  :ref => 'stable/newton'
+
 # External modules
 mod 'apache',
   :git => 'https://github.com/puppetlabs/puppetlabs-apache',
