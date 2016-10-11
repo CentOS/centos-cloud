@@ -33,25 +33,6 @@ class centos_cloud::controller::keystone (
     public_workers         => $public_workers
   }
 
-  # Remove me when this is merged, built and released:
-  # https://review.rdoproject.org/r/#/c/1144/
-  file { '/var/log/keystone':
-    ensure  => directory,
-    owner   => 'keystone',
-    group   => 'keystone',
-    mode    => '0750',
-    before  => Exec['keystone-manage db_sync'],
-    require => Package['keystone']
-  }->
-  file { '/var/log/keystone/keystone.log':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'keystone',
-    mode    => '0660',
-    before  => Exec['keystone-manage db_sync'],
-    require => Package['keystone']
-  }
-
   include ::apache
   class { '::keystone::wsgi::apache':
     admin_bind_host => $bind_host,
