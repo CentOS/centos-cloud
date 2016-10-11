@@ -41,7 +41,6 @@ class centos_cloud::controller::nova (
   }
 
   class { '::nova::keystone::auth':
-    configure_ec2_endpoint => false,
     configure_endpoint_v3  => false,
     admin_url              => "http://${controller}:8774/v2/%(tenant_id)s",
     internal_url           => "http://${controller}:8774/v2/%(tenant_id)s",
