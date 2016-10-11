@@ -1,3 +1,7 @@
+# Overlay module
+mod 'centos_cloud',
+  :local => true
+
 # OpenStack modules
 mod 'glance',
   :git => 'https://git.openstack.org/openstack/puppet-glance',
