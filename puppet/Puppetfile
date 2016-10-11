@@ -1,8 +1,4 @@
 # OpenStack modules
-mod 'cinder',
-  :git => 'https://git.openstack.org/openstack/puppet-cinder',
-  :ref => 'stable/newton'
-
 mod 'glance',
   :git => 'https://git.openstack.org/openstack/puppet-glance',
   :ref => 'stable/newton'
