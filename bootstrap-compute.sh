@@ -7,7 +7,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo "${1} controller.openstack.ci.centos.org" >> /etc/hosts
 puppet apply -e "include ::centos_cloud::compute" || exit 1
 
 # Sanity check

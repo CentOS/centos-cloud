@@ -18,7 +18,7 @@ Compute Node(s)::
     yum -y install git
     git clone https://github.com/CentOS/centos-cloud
     cd centos-cloud
-    ./bootstrap-compute.sh <ipaddress_of_controller>
+    ./bootstrap-compute.sh
 
 To generate test resources (ssh key, image, instance)::
 
