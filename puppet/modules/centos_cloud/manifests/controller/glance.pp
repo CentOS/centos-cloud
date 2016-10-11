@@ -43,26 +43,36 @@ class centos_cloud::controller::glance (
     password     => $password
   }
 
-  class { '::glance::api':
+  class { '::glance::api::authtoken':
+    password            => $password,
+    user_domain_name    => 'Default',
+    project_domain_name => 'Default',
+    auth_url            => "http://${controller}:35357",
     auth_uri            => "http://${controller}:5000",
+    memcached_servers   => $memcached_servers,
+  }
+
+  class { '::glance::api':
     bind_host           => $bind_host,
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/glance?charset=utf8",
-    memcached_servers   => $memcached_servers,
     default_store       => $backend,
-    identity_uri        => "http://${controller}:35357",
-    keystone_password   => $password,
     registry_host       => $controller,
     stores              => $stores,
     workers             => $workers
   }
 
-  class { '::glance::registry':
+  class { '::glance::registry::authtoken':
+    password            => $password,
+    user_domain_name    => 'Default',
+    project_domain_name => 'Default',
+    auth_url            => "http://${controller}:35357",
     auth_uri            => "http://${controller}:5000",
+    memcached_servers   => $memcached_servers,
+  }
+
+  class { '::glance::registry':
     bind_host           => $bind_host,
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/glance?charset=utf8",
-    memcached_servers   => $memcached_servers,
-    identity_uri        => "http://${controller}:35357",
-    keystone_password   => $password,
     workers             => $workers
   }
 
