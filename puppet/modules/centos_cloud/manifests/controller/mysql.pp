@@ -10,7 +10,7 @@ class centos_cloud::controller::mysql {
   }
 
   exec { 'Reload systemctl':
-    command     => "/usr/bin/systemctl daemon-reload",
+    command     => '/usr/bin/systemctl daemon-reload',
     refreshonly => true
   }
 

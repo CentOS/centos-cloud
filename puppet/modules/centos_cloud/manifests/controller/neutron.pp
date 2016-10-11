@@ -1,14 +1,14 @@
 class centos_cloud::controller::neutron (
-  $allowed_hosts     = "172.22.6.0/23",
-  $controller        = 'controller.openstack.ci.centos.org',
-  $memcache_servers  = ['127.0.0.1:11211'],
-  $bind_host         = '0.0.0.0',
-  $rabbit_port       = '5672',
-  $user              = 'neutron',
-  $password          = 'neutron',
-  $nova_password     = 'nova',
-  $api_workers       = '8',
-  $rpc_workers       = '8'
+  $allowed_hosts    = '172.22.6.0/23',
+  $controller       = 'controller.openstack.ci.centos.org',
+  $memcache_servers = ['127.0.0.1:11211'],
+  $bind_host        = '0.0.0.0',
+  $rabbit_port      = '5672',
+  $user             = 'neutron',
+  $password         = 'neutron',
+  $nova_password    = 'nova',
+  $api_workers      = '8',
+  $rpc_workers      = '8'
 ) {
 
   rabbitmq_user { $user:
@@ -70,10 +70,10 @@ class centos_cloud::controller::neutron (
   }
 
   class { '::neutron::plugins::ml2':
-    type_drivers          => ['flat'],
-    tenant_network_types  => [],
-    mechanism_drivers     => ['linuxbridge'],
-    flat_networks         => ['physnet0'],
+    type_drivers         => ['flat'],
+    tenant_network_types => [],
+    mechanism_drivers    => ['linuxbridge'],
+    flat_networks        => ['physnet0'],
   }
 
   class { '::neutron::agents::ml2::linuxbridge':

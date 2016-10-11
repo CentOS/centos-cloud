@@ -85,10 +85,10 @@ class centos_cloud::controller::nova (
   }
 
   class { '::nova::network::neutron':
-    firewall_driver    => 'nova.virt.firewall.NoopFirewallDriver',
-    neutron_auth_url   => "http://${controller}:35357/v3",
-    neutron_url        => "http://${controller}:9696",
-    neutron_password   => $neutron_password,
+    firewall_driver  => 'nova.virt.firewall.NoopFirewallDriver',
+    neutron_auth_url => "http://${controller}:35357/v3",
+    neutron_url      => "http://${controller}:9696",
+    neutron_password => $neutron_password,
   }
 
   include ::nova::client
