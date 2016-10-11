@@ -17,7 +17,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-yum -y install yum-plugin-priorities rubygems centos-release-openstack-mitaka
+yum -y install yum-plugin-priorities rubygems centos-release-openstack-newton
 yum -y install puppet python-openstackclient
 gem install r10k
 
