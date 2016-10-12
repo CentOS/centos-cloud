@@ -27,8 +27,7 @@ class centos_cloud::compute::neutron (
 
   class { '::neutron::agents::ml2::linuxbridge':
     firewall_driver             => 'neutron.agent.firewall.NoopFirewallDriver',
-    local_ip                    => $::ipaddress,
-    physical_interface_mappings => ['physnet0:eth0'],
+    physical_interface_mappings => ['physnet0:eth1'],
   }
 
   class { '::neutron::agents::dhcp':
