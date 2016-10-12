@@ -13,7 +13,9 @@ class centos_cloud::server::packages {
     'sysfsutils',
     'sysstat',
     'tcpdump',
-    'wget'
+    'wget',
+    'mtr',
+    'nmap'
   ]:
     ensure => 'latest'
   }
