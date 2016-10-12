@@ -7,4 +7,5 @@ class centos_cloud::controller {
   include centos_cloud::controller::neutron
   include centos_cloud::controller::nova
   include centos_cloud::controller::provision
+  include centos_cloud::controller::quotas
 }
