@@ -1,5 +1,5 @@
 class centos_cloud::controller::glance (
-  $allowed_hosts     = '172.22.6.0/23',
+  $allowed_hosts     = '172.22.6.%',
   $backend           = 'file',
   $bind_host         = '0.0.0.0',
   $controller        = 'controller.openstack.ci.centos.org',
