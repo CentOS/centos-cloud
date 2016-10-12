@@ -17,7 +17,7 @@ if [ $? -ne 0 ]; then
 fi
 
 yum -y install yum-plugin-priorities rubygems centos-release-openstack-newton
-yum -y install puppet python-openstackclient
+yum -y install puppet python-openstackclient openstack-selinux
 gem install r10k
 
 cwd=$(cd `dirname $0` && pwd -P)

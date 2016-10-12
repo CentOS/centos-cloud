@@ -6,7 +6,6 @@ class centos_cloud::server::packages {
     'libselinux-python',
     'lsof',
     'net-tools',
-    'openstack-selinux',
     'policycoreutils-python',
     'psmisc',
     'redhat-lsb-core',
