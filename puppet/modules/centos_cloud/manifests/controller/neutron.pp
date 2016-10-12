@@ -1,5 +1,5 @@
 class centos_cloud::controller::neutron (
-  $allowed_hosts     = '172.22.6.0/23',
+  $allowed_hosts     = '172.22.6.%',
   $controller        = 'controller.openstack.ci.centos.org',
   $memcached_servers = ['127.0.0.1:11211'],
   $bind_host         = '0.0.0.0',
