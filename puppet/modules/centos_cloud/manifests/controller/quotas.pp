@@ -46,11 +46,11 @@
 #
 # [*network*]
 #   (optional) Max amount of networks per project.
-#   Defaults to 0 (projects are not allowed to create their own networks)
+#   Defaults to 1
 #
 # [*subnet*]
 #   (optional) Max amount of subnets per project.
-#   Defaults to 0 (projects are not allowed to create their own subnets)
+#   Defaults to 1
 #
 # [*network_gateway*]
 #   (optional) Max amount of network gateways per project.
@@ -83,8 +83,8 @@ class centos_cloud::controller::quotas (
   $security_group_rules = 0,
   # Neutron
   $port                 = 20,
-  $network              = 0,
-  $subnet               = 0,
+  $network              = 1,
+  $subnet               = 1,
   $network_gateway      = 0,
   $router               = 0,
   $floatingip           = 0,
