@@ -4,24 +4,29 @@ class centos_cloud::controller::provision {
   ###
   Keystone_user_role['admin@openstack'] -> Nova_flavor<||>
 
+  # Flavors are designed after compute nodes with 32 cores, 64 GB RAM and
+  # 320 GB of disk space allocation with no oversubscription for maximum
+  # performance. This allows for 32 tiny, 16 small or 8 medium VMs.
+  # RAM allocation is truncated on purpose to ensure reserve ~2GB of RAM to
+  # the compute node, especially considering KVM RAM overhead.
   nova_flavor { 'tiny':
     ensure => present,
-    ram    => '2048',
-    disk   => '20',
+    ram    => '1940',
+    disk   => '10',
     vcpus  => '1',
   }
 
   nova_flavor { 'small':
     ensure => present,
-    ram    => '4096',
-    disk   => '40',
+    ram    => '3875',
+    disk   => '20',
     vcpus  => '2',
   }
 
   nova_flavor { 'medium':
     ensure => present,
-    ram    => '8192',
-    disk   => '80',
+    ram    => '7750',
+    disk   => '40',
     vcpus  => '4',
   }
 
