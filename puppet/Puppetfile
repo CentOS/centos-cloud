@@ -44,6 +44,10 @@ mod 'inifile',
   :git => 'https://github.com/puppetlabs/puppetlabs-inifile',
   :branch => '1.6.0'
 
+mod 'kmod',
+  :git => 'https://github.com/camptocamp/puppet-kmod',
+  :ref => '2.1.1'
+
 mod 'memcached',
   :git => 'https://github.com/saz/puppet-memcached',
   :tag => 'v2.8.1'
