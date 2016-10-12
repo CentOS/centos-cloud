@@ -41,18 +41,24 @@ class centos_cloud::controller::nova (
   }
 
   class { '::nova::keystone::auth':
-    configure_ec2_endpoint => false,
-    configure_endpoint_v3  => false,
-    admin_url              => "http://${controller}:8774/v2/%(tenant_id)s",
-    internal_url           => "http://${controller}:8774/v2/%(tenant_id)s",
-    public_url             => "http://${controller}:8774/v2/%(tenant_id)s",
-    password               => $password
+    admin_url    => "http://${controller}:8774/v2/%(tenant_id)s",
+    internal_url => "http://${controller}:8774/v2/%(tenant_id)s",
+    public_url   => "http://${controller}:8774/v2/%(tenant_id)s",
+    password     => $password
+  }
+
+  class { '::nova::keystone::authtoken':
+    password            => $password,
+    user_domain_name    => 'Default',
+    project_domain_name => 'Default',
+    auth_url            => "http://${controller}:35357",
+    auth_uri            => "http://${controller}:5000",
+    memcached_servers   => $memcached_servers,
   }
 
   class { '::nova':
     api_database_connection => "mysql+pymysql://${user_api}:${password_api}@${controller}/nova_api?charset=utf8",
     database_connection     => "mysql+pymysql://${user}:${password}@${controller}/nova?charset=utf8",
-    memcached_servers       => $memcached_servers,
     glance_api_servers      => "http://${controller}:9292",
     notification_driver     => 'messagingv2',
     notify_on_state_change  => 'vm_and_task_state',
@@ -64,15 +70,12 @@ class centos_cloud::controller::nova (
   }
 
   class { '::nova::api':
-    admin_password        => $password,
     api_bind_address      => $bind_host,
-    auth_uri              => "http://${controller}:5000",
     enabled_apis          => ['osapi_compute'],
-    identity_uri          => "http://${controller}:35357",
-    osapi_v3              => true,
     service_name          => 'httpd',
     sync_db_api           => true,
-    osapi_compute_workers => $workers
+    osapi_compute_workers => $workers,
+    install_cinder_client => false
   }
 
   include ::apache
@@ -85,10 +88,10 @@ class centos_cloud::controller::nova (
   }
 
   class { '::nova::network::neutron':
-    firewall_driver    => 'nova.virt.firewall.NoopFirewallDriver',
-    neutron_auth_url   => "http://${controller}:35357/v3",
-    neutron_url        => "http://${controller}:9696",
-    neutron_password   => $neutron_password,
+    firewall_driver  => 'nova.virt.firewall.NoopFirewallDriver',
+    neutron_auth_url => "http://${controller}:35357/v3",
+    neutron_url      => "http://${controller}:9696",
+    neutron_password => $neutron_password,
   }
 
   include ::nova::client
@@ -98,5 +101,4 @@ class centos_cloud::controller::nova (
   include ::nova::cron::archive_deleted_rows
   include ::nova::scheduler
   include ::nova::scheduler::filter
-
 }

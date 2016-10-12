@@ -8,7 +8,7 @@ Controller::
 
     ssh root@controller
     yum -y install git
-    git clone https://github.com/dmsimard/centos-cloud
+    git clone https://github.com/CentOS/centos-cloud
     cd centos-cloud
     ./bootstrap-controller.sh
 
@@ -16,9 +16,9 @@ Compute Node(s)::
 
     ssh root@compute01
     yum -y install git
-    git clone https://github.com/dmsimard/centos-cloud
+    git clone https://github.com/CentOS/centos-cloud
     cd centos-cloud
-    ./bootstrap-compute.sh <ipaddress_of_controller>
+    ./bootstrap-compute.sh
 
 To generate test resources (ssh key, image, instance)::
 

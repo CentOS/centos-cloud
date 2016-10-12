@@ -4,10 +4,8 @@
   gather_facts: yes
   tasks:
     - shell: |
-        pushd /etc/puppet
-        PUPPETFILE=/root/centos-cloud/puppet/Puppetfile r10k puppetfile install -v
-        cp -a /root/centos-cloud/puppet/modules/centos_cloud modules/
-        popd
+        r10k puppetfile install --puppetfile {{ source_location }}/puppet/Puppetfile --moduledir /etc/puppet/modules -v
+        cp -a {{ source_location }}/puppet/modules/centos_cloud /etc/puppet/modules/
 
 - name: Update controller
   hosts: controller

@@ -1,15 +1,15 @@
 class centos_cloud::controller::keystone (
-  $allowed_hosts          = "172.22.6.0/23",
-  $bind_host              = '0.0.0.0',
-  $controller             = 'controller.openstack.ci.centos.org',
-  $password               = 'keystone',
-  $user                   = 'keystone',
-  $token_provider         = 'fernet',
-  $enable_fernet_setup    = true,
-  $admin_workers          = '16',
-  $public_workers         = '16',
-  $workers                = '16',
-  $threads                = '1'
+  $allowed_hosts       = '172.22.6.0/23',
+  $bind_host           = '0.0.0.0',
+  $controller          = 'controller.openstack.ci.centos.org',
+  $password            = 'keystone',
+  $user                = 'keystone',
+  $token_provider      = 'fernet',
+  $enable_fernet_setup = true,
+  $admin_workers       = '16',
+  $public_workers      = '16',
+  $workers             = '16',
+  $threads             = '1'
 ) {
 
   include ::keystone::client
@@ -21,35 +21,16 @@ class centos_cloud::controller::keystone (
   }
 
   class { '::keystone':
-    admin_bind_host        => $bind_host,
-    admin_token            => $password,
-    database_connection    => "mysql+pymysql://${user}:${password}@${controller}/keystone",
-    enabled                => true,
-    public_bind_host       => $bind_host,
-    service_name           => 'httpd',
-    token_provider         => $token_provider,
-    enable_fernet_setup    => $enable_fernet_setup,
-    admin_workers          => $admin_workers,
-    public_workers         => $public_workers
-  }
-
-  # Remove me when this is merged, built and released:
-  # https://review.rdoproject.org/r/#/c/1144/
-  file { '/var/log/keystone':
-    ensure  => directory,
-    owner   => 'keystone',
-    group   => 'keystone',
-    mode    => '0750',
-    before  => Exec['keystone-manage db_sync'],
-    require => Package['keystone']
-  }->
-  file { '/var/log/keystone/keystone.log':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'keystone',
-    mode    => '0660',
-    before  => Exec['keystone-manage db_sync'],
-    require => Package['keystone']
+    admin_bind_host     => $bind_host,
+    admin_token         => $password,
+    database_connection => "mysql+pymysql://${user}:${password}@${controller}/keystone",
+    enabled             => true,
+    public_bind_host    => $bind_host,
+    service_name        => 'httpd',
+    token_provider      => $token_provider,
+    enable_fernet_setup => $enable_fernet_setup,
+    admin_workers       => $admin_workers,
+    public_workers      => $public_workers
   }
 
   include ::apache

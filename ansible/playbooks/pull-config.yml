@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
     - git:
-        repo: "https://github.com/dmsimard/centos-cloud"
-        dest: "/root/centos-cloud"
+        repo: "https://github.com/CentOS/centos-cloud"
+        dest: "{{ source_location }}"
         update: "yes"
         force: "yes"

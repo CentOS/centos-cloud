@@ -1,7 +1,7 @@
 class centos_cloud::controller::neutron (
-  $allowed_hosts     = "172.22.6.0/23",
+  $allowed_hosts     = '172.22.6.0/23',
   $controller        = 'controller.openstack.ci.centos.org',
-  $memcache_servers  = ['127.0.0.1:11211'],
+  $memcached_servers = ['127.0.0.1:11211'],
   $bind_host         = '0.0.0.0',
   $rabbit_port       = '5672',
   $user              = 'neutron',
@@ -44,7 +44,6 @@ class centos_cloud::controller::neutron (
     bind_host               => $bind_host,
     core_plugin             => 'ml2',
     dhcp_agent_notification => true,
-    memcache_servers        => $memcache_servers,
     rabbit_user             => $user,
     rabbit_password         => $password,
     rabbit_host             => $controller,
@@ -53,48 +52,37 @@ class centos_cloud::controller::neutron (
 
   include ::neutron::client
 
+  class { '::neutron::keystone::authtoken':
+    password            => $password,
+    user_domain_name    => 'Default',
+    project_domain_name => 'Default',
+    auth_url            => "http://${controller}:35357",
+    auth_uri            => "http://${controller}:5000",
+    memcached_servers   => $memcached_servers,
+  }
+
   class { '::neutron::server':
     api_workers         => $api_workers,
-    auth_uri            => "http://${controller}:5000",
-    auth_url            => "http://${controller}:35357",
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/neutron?charset=utf8",
-    password            => $password,
     rpc_workers         => $rpc_workers,
     sync_db             => true
   }
 
   class { '::neutron::server::notifications':
     auth_url => "http://${controller}:35357",
-    nova_url => "http://${controller}:8774/v2",
     password => $nova_password
   }
 
   class { '::neutron::plugins::ml2':
-    type_drivers          => ['flat'],
-    tenant_network_types  => [],
-    mechanism_drivers     => ['linuxbridge'],
-    flat_networks         => ['physnet0'],
+    type_drivers         => ['flat'],
+    tenant_network_types => [],
+    mechanism_drivers    => ['linuxbridge'],
+    flat_networks        => ['physnet0'],
   }
 
   class { '::neutron::agents::ml2::linuxbridge':
     firewall_driver             => 'neutron.agent.firewall.NoopFirewallDriver',
     local_ip                    => $::ipaddress,
     physical_interface_mappings => ['physnet0:eth0'],
-  }
-
-  # Provider network
-  neutron_network { 'publicnet':
-    shared                    => true,
-    provider_network_type     => 'flat',
-    provider_physical_network => 'physnet0',
-  }
-
-  # Provider subnet
-  neutron_subnet { 'publicsubnet':
-    cidr             => '172.19.4.0/22',
-    gateway_ip       => '172.19.7.254',
-    network_name     => 'publicnet',
-    dns_nameservers  => ['172.19.7.253'],
-    allocation_pools => ["start=172.19.4.10,end=172.19.7.250"],
   }
 }
