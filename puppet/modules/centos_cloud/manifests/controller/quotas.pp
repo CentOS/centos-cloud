@@ -40,17 +40,17 @@
 #
 # ## Neutron
 #
-# [*ports*]
+# [*port*]
 #   (optional) Max amount of ports per project.
 #   Defaults to 20 (number of instances)
 #
 # [*network*]
 #   (optional) Max amount of networks per project.
-#   Defaults to 0 (projects are not allowed to create their own networks)
+#   Defaults to 1
 #
 # [*subnet*]
 #   (optional) Max amount of subnets per project.
-#   Defaults to 0 (projects are not allowed to create their own subnets)
+#   Defaults to 1
 #
 # [*network_gateway*]
 #   (optional) Max amount of network gateways per project.
@@ -82,9 +82,9 @@ class centos_cloud::controller::quotas (
   $security_groups      = 0,
   $security_group_rules = 0,
   # Neutron
-  $ports                = 20,
-  $network              = 0,
-  $subnet               = 0,
+  $port                 = 20,
+  $network              = 1,
+  $subnet               = 1,
   $network_gateway      = 0,
   $router               = 0,
   $floatingip           = 0,
@@ -101,7 +101,7 @@ class centos_cloud::controller::quotas (
   }
 
   class { '::neutron::quota':
-    quota_ports           => $ports,
+    quota_port            => $port,
     quota_network         => $network,
     quota_subnet          => $subnet,
     quota_network_gateway => $network_gateway,

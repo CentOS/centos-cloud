@@ -6,9 +6,10 @@ class centos_cloud::compute::nova (
   $password              = 'nova',
   $password_api          = 'nova_api',
   $neutron_password      = 'neutron',
-  $cpu_allocation_ratio  = '16.0',
-  $ram_allocation_ratio  = '1.5',
-  $disk_allocation_ratio = '1.5'
+  $cpu_allocation_ratio  = '1.0',
+  $ram_allocation_ratio  = '1.1',
+  $disk_allocation_ratio = '1.1',
+  $reserved_host_memory  = '1024'
 ) {
 
   class { '::nova':
@@ -31,7 +32,8 @@ class centos_cloud::compute::nova (
     force_config_drive          => true,
     instance_usage_audit        => true,
     instance_usage_audit_period => 'hour',
-    vnc_enabled                 => true
+    vnc_enabled                 => true,
+    reserved_host_memory        => $reserved_host_memory
   }
 
   class { '::nova::compute::libvirt':
