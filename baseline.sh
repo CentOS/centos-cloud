@@ -16,6 +16,12 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# Add own fqdn to hosts file
+if ! grep -q "127.0.0.1 $(hostname -f)" /etc/hosts; then
+    echo "127.0.0.1 $(hostname -f)" >>/etc/hosts
+    echo "Added to hosts file: 127.0.0.1 $(hostname -f)"
+fi
+
 yum -y install yum-plugin-priorities rubygems centos-release-openstack-newton
 yum -y install puppet python-openstackclient openstack-selinux
 gem install r10k
