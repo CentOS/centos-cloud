@@ -1,4 +1,6 @@
-class centos_cloud::controller::mysql {
+class centos_cloud::controller::mysql (
+  $root_password = 'mysql'
+) {
 
   file { '/etc/systemd/system/mariadb.service.d/':
     ensure => directory
@@ -15,7 +17,9 @@ class centos_cloud::controller::mysql {
   }
 
   class { '::mysql::server':
-    override_options => {
+    root_password           => $root_password,
+    remove_default_accounts => true,
+    override_options        => {
       'mysqld' => {
         'bind-address'    => '0.0.0.0',
         'max_connections' => '512',
