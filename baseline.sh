@@ -1,4 +1,6 @@
 #!/bin/bash
+cwd=$(cd `dirname $0` && pwd -P)
+
 # This script will do the basic common stuff needed everywhere
 if rpm -q NetworkManager; then
     service NetworkManager stop
