@@ -4,6 +4,8 @@ class centos_cloud::controller::keystone (
   $controller          = 'controller.openstack.ci.centos.org',
   $password            = 'keystone',
   $user                = 'keystone',
+  $admin_token         = 'admintoken',
+  $admin_password      = 'admin',
   $token_provider      = 'fernet',
   $enable_fernet_setup = true,
   $admin_workers       = '16',
@@ -22,7 +24,7 @@ class centos_cloud::controller::keystone (
 
   class { '::keystone':
     admin_bind_host     => $bind_host,
-    admin_token         => $password,
+    admin_token         => $admin_token,
     database_connection => "mysql+pymysql://${user}:${password}@${controller}/keystone",
     enabled             => true,
     public_bind_host    => $bind_host,
@@ -45,7 +47,7 @@ class centos_cloud::controller::keystone (
 
   class { '::keystone::roles::admin':
     email    => 'ci@centos.org',
-    password => $password
+    password => $admin_password
   }
 
   class { '::keystone::endpoint':
