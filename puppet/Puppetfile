@@ -1,3 +1,10 @@
+# Note: This file is for reference when wanting to install Pupppet modules
+# from source with r10k. Puppet modules are actually installed from packages
+# through the RDO repository.
+# To use r10k:
+#  yum -y install rubygems
+#  gem install r10k
+#  r10k puppetfile install --puppetfile Puppetfile --moduledir /etc/puppet/modules -v
 # Overlay module
 mod 'centos_cloud',
   :local => true
