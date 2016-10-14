@@ -34,6 +34,8 @@ Architecture tl;dr
 
 Notes
 -----
+- Non-default credentials to services, databases and such are crypted with git-crypt
+  inside the puppet/hiera/common.yaml file.
 - There is an openrc with credentials generated in /root/ of controller and compute nodes
 - To access a novnc console::
 
