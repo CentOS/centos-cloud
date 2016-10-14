@@ -1,5 +1,7 @@
 #!/bin/bash
 cwd=$(cd `dirname $0` && pwd -P)
+# Where OpenStack puppet modules are actually installed from packages
+MODULEPATH="/usr/share/openstack-puppet/modules"
 
 # This script will do the basic common stuff needed everywhere
 if rpm -q NetworkManager; then
@@ -27,9 +29,6 @@ fi
 yum -y install yum-plugin-priorities centos-release-openstack-newton
 yum -y install puppet python-openstackclient openstack-selinux
 
-# Install overlay module
-cp -a ${cwd}/puppet/modules/centos_cloud /etc/puppet/modules/
-
 # Install OpenStack puppet modules
 yum -y install puppet-keystone puppet-glance puppet-neutron puppet-nova \
                puppet-openstacklib puppet-openstack_extras puppet-oslo
@@ -38,6 +37,9 @@ yum -y install puppet-keystone puppet-glance puppet-neutron puppet-nova \
 yum -y install puppet-apache puppet-concat puppet-inifile puppet-kmod \
                puppet-memcached puppet-mysql puppet-ntp puppet-rabbitmq \
                puppet-staging puppet-stdlib puppet-sysctl
+
+# Install overlay module
+cp -a ${cwd}/puppet/modules/centos_cloud ${MODULEPATH}/
 
 # Install hiera configuration files
 cp -a ${cwd}/puppet/hiera.yaml /etc/puppet/
