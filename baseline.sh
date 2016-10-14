@@ -27,5 +27,11 @@ yum -y install puppet python-openstackclient openstack-selinux
 gem install r10k
 
 cwd=$(cd `dirname $0` && pwd -P)
+# Install puppet modules
 r10k puppetfile install --puppetfile ${cwd}/puppet/Puppetfile --moduledir /etc/puppet/modules -v
 cp -a ${cwd}/puppet/modules/centos_cloud /etc/puppet/modules/
+
+# Install hiera configuration files
+cp -a ${cwd}/puppet/hiera.yaml /etc/puppet/
+ln -sf /etc/puppet/hiera.yaml /etc/hiera.yaml
+cp -a ${cwd}/puppet/hiera /etc/puppet/
