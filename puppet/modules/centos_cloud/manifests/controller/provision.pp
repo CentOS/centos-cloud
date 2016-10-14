@@ -45,7 +45,7 @@ class centos_cloud::controller::provision (
   }
 
   neutron_subnet { 'publicsubnet':
-    cidr             => '172.19.4.0/21',
+    cidr             => '172.19.0.0/21',
     gateway_ip       => '172.19.3.254',
     network_name     => 'publicnet',
     dns_nameservers  => ['172.19.0.12'],
