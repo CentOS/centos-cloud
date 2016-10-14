@@ -1,4 +1,6 @@
-class centos_cloud::controller::provision {
+class centos_cloud::controller::provision (
+  $provision_images = false,
+) {
   ###
   # Nova
   ###
@@ -53,29 +55,31 @@ class centos_cloud::controller::provision {
   ###
   # Glance
   ###
-  Keystone_user_role['admin@openstack'] -> Glance_image<||>
+  if $provision_images {
+    Keystone_user_role['admin@openstack'] -> Glance_image<||>
 
-  glance_image { 'CentOS 7':
-    ensure           => present,
-    container_format => 'bare',
-    disk_format      => 'qcow2',
-    is_public        => 'yes',
-    source           => 'http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2'
-  }
+    glance_image { 'CentOS 7':
+      ensure           => present,
+      container_format => 'bare',
+      disk_format      => 'qcow2',
+      is_public        => 'yes',
+      source           => 'http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2'
+    }
 
-  glance_image { 'CentOS 6':
-    ensure           => present,
-    container_format => 'bare',
-    disk_format      => 'qcow2',
-    is_public        => 'yes',
-    source           => 'http://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud.qcow2'
-  }
+    glance_image { 'CentOS 6':
+      ensure           => present,
+      container_format => 'bare',
+      disk_format      => 'qcow2',
+      is_public        => 'yes',
+      source           => 'http://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud.qcow2'
+    }
 
-  glance_image { 'Fedora 24':
-    ensure           => present,
-    container_format => 'bare',
-    disk_format      => 'qcow2',
-    is_public        => 'yes',
-    source           => 'https://download.fedoraproject.org/pub/fedora/linux/releases/24/CloudImages/x86_64/images/Fedora-Cloud-Base-24-1.2.x86_64.qcow2'
+    glance_image { 'Fedora 24':
+      ensure           => present,
+      container_format => 'bare',
+      disk_format      => 'qcow2',
+      is_public        => 'yes',
+      source           => 'https://download.fedoraproject.org/pub/fedora/linux/releases/24/CloudImages/x86_64/images/Fedora-Cloud-Base-24-1.2.x86_64.qcow2'
+    }
   }
 }
