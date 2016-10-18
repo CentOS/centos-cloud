@@ -7,7 +7,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-puppet apply -e "include ::centos_cloud::compute" || exit 1
+puppet apply --modulepath=${MODULEPATH} -e "include ::centos_cloud::compute" || exit 1
 
 # Sanity check
 source /root/openrc

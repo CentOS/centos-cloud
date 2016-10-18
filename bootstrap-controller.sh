@@ -13,8 +13,7 @@ if ! grep -q "127.0.0.1 controller.openstack.ci.centos.org" /etc/hosts; then
     echo "Added to hosts file: 127.0.0.1 controller.openstack.ci.centos.org"
 fi
 
-
-puppet apply -e "include ::centos_cloud::controller" || exit 1
+puppet apply --modulepath=${MODULEPATH} -e "include ::centos_cloud::controller" || exit 1
 
 # Sanity check
 source /root/openrc

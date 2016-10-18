@@ -1,4 +1,8 @@
 #!/bin/bash
+cwd=$(cd `dirname $0` && pwd -P)
+# Where OpenStack puppet modules are actually installed from packages
+MODULEPATH="/usr/share/openstack-puppet/modules"
+
 # This script will do the basic common stuff needed everywhere
 if rpm -q NetworkManager; then
     service NetworkManager stop
@@ -22,10 +26,22 @@ if ! grep -q "127.0.0.1 $(hostname -f)" /etc/hosts; then
     echo "Added to hosts file: 127.0.0.1 $(hostname -f)"
 fi
 
-yum -y install yum-plugin-priorities rubygems centos-release-openstack-newton
+yum -y install yum-plugin-priorities centos-release-openstack-newton
 yum -y install puppet python-openstackclient openstack-selinux
-gem install r10k
 
-cwd=$(cd `dirname $0` && pwd -P)
-r10k puppetfile install --puppetfile ${cwd}/puppet/Puppetfile --moduledir /etc/puppet/modules -v
-cp -a ${cwd}/puppet/modules/centos_cloud /etc/puppet/modules/
+# Install OpenStack puppet modules
+yum -y install puppet-keystone puppet-glance puppet-neutron puppet-nova \
+               puppet-openstacklib puppet-openstack_extras puppet-oslo
+
+# Install "external" puppet modules
+yum -y install puppet-apache puppet-concat puppet-inifile puppet-kmod \
+               puppet-memcached puppet-mysql puppet-ntp puppet-rabbitmq \
+               puppet-staging puppet-stdlib puppet-sysctl
+
+# Install overlay module
+cp -a ${cwd}/puppet/modules/centos_cloud ${MODULEPATH}/
+
+# Install hiera configuration files
+cp -a ${cwd}/puppet/hiera.yaml /etc/puppet/
+ln -sf /etc/puppet/hiera.yaml /etc/hiera.yaml
+cp -a ${cwd}/puppet/hiera /etc/puppet/
